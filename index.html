@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>XXSPubSub documentation</title><link rel="stylesheet" href="dr.css" media="screen"><link rel="stylesheet" href="dr-print.css" media="print"></head><body id="dr-js"><div id="dr"><ol class="dr-toc" id="dr-toc"><li class="dr-lvl0"><a href="#publish" class="dr-method"><span>publish()</span></a></li><li class="dr-lvl0"><a href="#subscribe" class="dr-method"><span>subscribe()</span></a></li><li class="dr-lvl0"><a href="#unsubscribe" class="dr-method"><span>unsubscribe()</span></a></li></ol><div class="dr-doc"><h1><a href="https://github.com/dciccale/xxspubsub">XXSPubSub</a> documentation</h1><div class="publish-section"><h2 id="publish" class="dr-method"><i class="dr-trixie">&#160;</i>publish(channel, data)<a href="#publish" title="Link to this section" class="dr-hash">✰</a><a class="dr-sourceline" title="Go to line 22 in the source" href="xxspubsub-src.html#L22">&#x27ad;</a></h2>
+<div class="extra" id="publish-extra"></div></div><div class="dr-method"><p>Publish data to a specified channel
+</p>
+<p class="header">Arguments
+</p>
+<dl class="dr-parameters"><dt class="dr-param">channel</dt>
+<dd class="dr-type"><em class="dr-type-string">string</em></dd>
+<dd class="dr-description">&#160;</dd>
+<dt class="dr-param">data</dt>
+<dd class="dr-type"><em class="dr-type-array">array</em></dd>
+<dd class="dr-description">&#160;</dd>
+</dl>
+<p class="header">Usage
+</p>
+<pre class="javascript code"><code>publish(<i>'some/channel'</i>, [<i>'Denis'</i>, <i>'Ciccale'</i>]);
+</code></pre>
+</div><div class="subscribe-section"><h2 id="subscribe" class="dr-method"><i class="dr-trixie">&#160;</i>subscribe(channel, handler)<a href="#subscribe" title="Link to this section" class="dr-hash">✰</a><a class="dr-sourceline" title="Go to line 43 in the source" href="xxspubsub-src.html#L43">&#x27ad;</a></h2>
+<div class="extra" id="subscribe-extra"></div></div><div class="dr-method"><p>Subscribe a handler to a specified channel
+</p>
+<p class="header">Arguments
+</p>
+<dl class="dr-parameters"><dt class="dr-param">channel</dt>
+<dd class="dr-type"><em class="dr-type-string">string</em></dd>
+<dd class="dr-description">the channel to subscribe to</dd>
+<dt class="dr-param">handler</dt>
+<dd class="dr-type"><em class="dr-type-function">function</em></dd>
+<dd class="dr-description">the function to execute when it's channel is published</dd>
+</dl>
+<p class="header">Usage
+</p>
+<pre class="javascript code"><code><b>var</b> handle<span class="s"> = </span>subscribe(<i>'some/channel'</i>, <b>function</b> (name, lastName) {
+  console.log(name<span class="s"> + </span><i>' '</i><span class="s"> + </span>lastName);
+});
+</code></pre>
+</div><div class="unsubscribe-section"><h2 id="unsubscribe" class="dr-method"><i class="dr-trixie">&#160;</i>unsubscribe(handle)<a href="#unsubscribe" title="Link to this section" class="dr-hash">✰</a><a class="dr-sourceline" title="Go to line 58 in the source" href="xxspubsub-src.html#L58">&#x27ad;</a></h2>
+<div class="extra" id="unsubscribe-extra"></div></div><div class="dr-method"><p>Unsubscribe a handler from a specified channel
+</p>
+<p class="header">Arguments
+</p>
+<dl class="dr-parameters"><dt class="dr-param">handle</dt>
+<dd class="dr-type"><em class="dr-type-array">array</em></dd>
+<dd class="dr-description">the array that is returned from the <a href="#subscribe" class="dr-link">subscribe</a> function</dd>
+</dl>
+<p class="header">Usage
+</p>
+<pre class="javascript code"><code><span class="c">// the handle variable is defined on the subscribe example</span>
+unsubscribe(handle);
+</code></pre>
+</div></div></div>
+</body></html>

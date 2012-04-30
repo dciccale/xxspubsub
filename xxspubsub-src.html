@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>xxspubsub.js</title><link rel="stylesheet" href="dr.css"></head><body id="src-dr-js"><code id="L1"><span class="ln">1</span><span class="c"><span class="c">/*!</span>
+</span></code><code id="L2"><span class="ln">2</span><span class="c"><span class="s"> * </span>XXSPubSub
+</span></code><code id="L3"><span class="ln">3</span><span class="c"><span class="s"> * </span>Copyright (c) <span class="d">2012</span> Denis Ciccale (@tdecs)
+</span></code><code id="L4"><span class="ln">4</span><span class="c"><span class="s"> * </span>Released under MIT license (https:<span class="c">//raw.github.com/dciccale/xxspubsub/master/LICENSE.txt)</span>
+</span></code><code id="L5"><span class="ln">5</span><span class="c"> */</span>
+</code><code id="L6"><span class="ln">6</span>(<b>function</b> (root) {
+</code><code id="L7"><span class="ln">7</span>  <span class="c">// <i>"XXSPubSub"</i></span>
+</code><code id="L8"><span class="ln">8</span>
+</code><code id="L9"><span class="ln">9</span>  <span class="c">// subscribes hash</span>
+</code><code id="L10"><span class="ln">10</span>  <b>var</b> channels<span class="s"> = </span>{};
+</code><code id="L11"><span class="ln">11</span>
+</code><code id="L12"><span class="ln">12</span><span class="c">  <span class="c">/*\</span>
+</span></code><code id="L13"><span class="ln">13</span><span class="c">  <span class="s"> * </span>publish
+</span></code><code id="L14"><span class="ln">14</span><span class="c">   [ method ]
+</span></code><code id="L15"><span class="ln">15</span><span class="c">  <span class="s"> * </span>Publish data to a specified channel
+</span></code><code id="L16"><span class="ln">16</span><span class="c">   > Arguments
+</span></code><code id="L17"><span class="ln">17</span><span class="c">  <span class="s"> - </span>channel (string)
+</span></code><code id="L18"><span class="ln">18</span><span class="c">  <span class="s"> - </span>data (array)
+</span></code><code id="L19"><span class="ln">19</span><span class="c">   > Usage
+</span></code><code id="L20"><span class="ln">20</span><span class="c">  <span class="s"> | </span>publish(<i>'some/channel'</i>, [<i>'Denis'</i>, <i>'Ciccale'</i>]);
+</span></code><code id="L21"><span class="ln">21</span><span class="c">  \*/</span>
+</code><code id="L22"><span class="ln">22</span>  root.publish<span class="s"> = </span><b>function</b> (channel, data) {
+</code><code id="L23"><span class="ln">23</span>    <b>var</b> subscribes<span class="s"> = </span>channels[channel]<span class="s"> || </span>[],
+</code><code id="L24"><span class="ln">24</span>      l<span class="s"> = </span>subscribes.length;
+</code><code id="L25"><span class="ln">25</span>
+</code><code id="L26"><span class="ln">26</span>    <b>while</b> (l--) {
+</code><code id="L27"><span class="ln">27</span>      subscribes[l].apply(root, data<span class="s"> || </span>[]);
+</code><code id="L28"><span class="ln">28</span>    }
+</code><code id="L29"><span class="ln">29</span>  };
+</code><code id="L30"><span class="ln">30</span>
+</code><code id="L31"><span class="ln">31</span><span class="c">  <span class="c">/*\</span>
+</span></code><code id="L32"><span class="ln">32</span><span class="c">  <span class="s"> * </span>subscribe
+</span></code><code id="L33"><span class="ln">33</span><span class="c">   [ method ]
+</span></code><code id="L34"><span class="ln">34</span><span class="c">  <span class="s"> * </span>Subscribe a handler to a specified channel
+</span></code><code id="L35"><span class="ln">35</span><span class="c">   > Arguments
+</span></code><code id="L36"><span class="ln">36</span><span class="c">  <span class="s"> - </span>channel (string) the channel to subscribe to
+</span></code><code id="L37"><span class="ln">37</span><span class="c">  <span class="s"> - </span>handler (<b>function</b>) the <b>function</b> to execute when it's channel is published
+</span></code><code id="L38"><span class="ln">38</span><span class="c">   > Usage
+</span></code><code id="L39"><span class="ln">39</span><span class="c">  <span class="s"> | </span><b>var</b> handle<span class="s"> = </span>subscribe(<i>'some/channel'</i>, <b>function</b> (name, lastName) {
+</span></code><code id="L40"><span class="ln">40</span><span class="c">  <span class="s"> | </span>  console.log(name<span class="s"> + </span><i>' '</i><span class="s"> + </span>lastName);
+</span></code><code id="L41"><span class="ln">41</span><span class="c">  <span class="s"> | </span>});
+</span></code><code id="L42"><span class="ln">42</span><span class="c">  \*/</span>
+</code><code id="L43"><span class="ln">43</span>  root.subscribe<span class="s"> = </span><b>function</b> (channel, handler) {
+</code><code id="L44"><span class="ln">44</span>    (channels[channel]<span class="s"> = </span>channels[channel]<span class="s"> || </span>[]).push(handler);
+</code><code id="L45"><span class="ln">45</span>    <b>return</b> [channel, handler];
+</code><code id="L46"><span class="ln">46</span>  };
+</code><code id="L47"><span class="ln">47</span>
+</code><code id="L48"><span class="ln">48</span><span class="c">  <span class="c">/*\</span>
+</span></code><code id="L49"><span class="ln">49</span><span class="c">  <span class="s"> * </span>unsubscribe
+</span></code><code id="L50"><span class="ln">50</span><span class="c">   [ method ]
+</span></code><code id="L51"><span class="ln">51</span><span class="c">  <span class="s"> * </span>Unsubscribe a handler from a specified channel
+</span></code><code id="L52"><span class="ln">52</span><span class="c">   > Arguments
+</span></code><code id="L53"><span class="ln">53</span><span class="c">  <span class="s"> - </span>handle (array) the array that is returned from the @subscribe <b>function</b>
+</span></code><code id="L54"><span class="ln">54</span><span class="c">   > Usage
+</span></code><code id="L55"><span class="ln">55</span><span class="c">  <span class="s"> | </span><span class="c">// the handle variable is defined on the subscribe example</span>
+</span></code><code id="L56"><span class="ln">56</span><span class="c">  <span class="s"> | </span>unsubscribe(handle);
+</span></code><code id="L57"><span class="ln">57</span><span class="c">  \*/</span>
+</code><code id="L58"><span class="ln">58</span>  root.unsubscribe<span class="s"> = </span><b>function</b> (handle) {
+</code><code id="L59"><span class="ln">59</span>    <b>var</b> subscribes<span class="s"> = </span>channels[handle[<span class="d">0</span>]],
+</code><code id="L60"><span class="ln">60</span>      l<span class="s"> = </span>subscribes.length;
+</code><code id="L61"><span class="ln">61</span>
+</code><code id="L62"><span class="ln">62</span>    <b>while</b> (l--) {
+</code><code id="L63"><span class="ln">63</span>      <b>if</b> (subscribes[l]<span class="s"> === </span>handle[<span class="d">1</span>]) {
+</code><code id="L64"><span class="ln">64</span>        subscribes.splice(l, <span class="d">1</span>);
+</code><code id="L65"><span class="ln">65</span>      }
+</code><code id="L66"><span class="ln">66</span>    }
+</code><code id="L67"><span class="ln">67</span>  };
+</code><code id="L68"><span class="ln">68</span>}(<b>this</b>));
+</code></body></html>
