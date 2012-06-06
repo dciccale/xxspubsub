@@ -11,4 +11,4 @@ If your project use jQuery, use this version of XXSPubSub, is the smallest posib
 Also if you like CoffeeScript, a .coffee version is included
 
 ## License
-See LICENSE.txt
+See [LICENSE.txt](https://raw.github.com/dciccale/xxspubsub/master/LICENSE.txt)
